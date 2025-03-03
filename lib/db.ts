@@ -112,7 +112,7 @@ export const phones: Phone[] = [
     price: 999,
     originalPrice: 1099,
     rating: 4.8,
-    image: "/placeholder.svg?height=400&width=300",
+    image: "/products/iPhone15Pro.jpg",
     images: [
       "/placeholder.svg?height=800&width=600",
       "/placeholder.svg?height=800&width=600",
@@ -160,7 +160,7 @@ export const phones: Phone[] = [
     brand: "Samsung",
     price: 1199,
     rating: 4.7,
-    image: "/placeholder.svg?height=400&width=300",
+    image: "/products/SamsungGalaxyS23Ultra.jpg",
     images: [
       "/placeholder.svg?height=800&width=600",
       "/placeholder.svg?height=800&width=600",
@@ -208,7 +208,7 @@ export const phones: Phone[] = [
     brand: "Google",
     price: 899,
     rating: 4.6,
-    image: "/placeholder.svg?height=400&width=300",
+    image: "/products/GooglePixel8Pro.jpg",
     images: [
       "/placeholder.svg?height=800&width=600",
       "/placeholder.svg?height=800&width=600",
@@ -256,7 +256,7 @@ export const phones: Phone[] = [
     brand: "OnePlus",
     price: 799,
     rating: 4.5,
-    image: "/placeholder.svg?height=400&width=300",
+    image: "/products/onePlus12.jpg",
     images: [
       "/placeholder.svg?height=800&width=600",
       "/placeholder.svg?height=800&width=600",
