@@ -34,7 +34,7 @@ export default function ProductsPage() {
   }, []);
 
   const fetchProducts = async () => {
-    const response = await fetch("/api/phones");
+    const response = await fetch("/api/shop");
     if (response.ok) {
       const data = await response.json();
       setProducts(data);
