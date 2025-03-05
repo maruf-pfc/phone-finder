@@ -8,6 +8,7 @@ import Header from "@/components/header";
 import { AuthProvider } from "@/context/auth-context";
 import { CartProvider } from "@/context/cart-context";
 import { ComparisonProvider } from "@/context/comparison-context";
+import Footer from "@/components/footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -37,6 +38,7 @@ export default function RootLayout({
                 <div className="flex min-h-screen flex-col">
                   <Header />
                   <main className="flex-1 container">{children}</main>
+                  <Footer />
                 </div>
                 <Toaster />
               </ComparisonProvider>
