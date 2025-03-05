@@ -1,4 +1,4 @@
-import type { Phone } from "@/types/phone"
+import type { Phone } from "@/lib/db"
 
 let phones: Phone[] = [
   {

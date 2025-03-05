@@ -1,4 +1,4 @@
-import type { Discussion } from "@/types/discussion"
+import type { Discussion } from "@/lib/db"
 
 let discussions: Discussion[] = []
 
