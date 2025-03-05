@@ -1,7 +1,9 @@
-import React from "react";
+import React from 'react'
 
-const AdminDashboard = () => {
-  return <div>Admin Dashboard</div>;
-};
+const Admin = () => {
+  return (
+    <div>AdminDashboard</div>
+  )
+}
 
-export default AdminDashboard;
+export default Admin
