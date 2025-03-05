@@ -1,50 +1,64 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { useParams } from "next/navigation"
-import { phones } from "@/lib/db"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent } from "@/components/ui/card"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Badge } from "@/components/ui/badge"
-import { ShoppingCart, Share2, Star, Check, BarChart2, ChevronLeft, ChevronRight } from "lucide-react"
-import Image from "next/image"
-import Link from "next/link"
-import { useCart } from "@/context/cart-context"
-import { useComparison } from "@/context/comparison-context"
-import { Separator } from "@/components/ui/separator"
-import { useToast } from "@/components/ui/use-toast"
+import { useState } from "react";
+import { useParams } from "next/navigation";
+import { phones } from "@/lib/db";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Badge } from "@/components/ui/badge";
+import {
+  ShoppingCart,
+  Share2,
+  Star,
+  Check,
+  BarChart2,
+  ChevronLeft,
+  ChevronRight,
+} from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { useCart } from "@/context/cart-context";
+import { useComparison } from "@/context/comparison-context";
+import { Separator } from "@/components/ui/separator";
+import { useToast } from "@/components/ui/use-toast";
 
 export default function PhoneDetailPage() {
-  const params = useParams()
-  const phoneId = Number.parseInt(params.id as string)
-  const phone = phones.find((p) => p.id === phoneId)
-  console.log(phone)
+  const params = useParams();
+  const phoneId = Number.parseInt(params.id as string);
+  const phone = phones.find((p) => p.id === phoneId);
+  console.log(phone);
 
-  const [selectedColor, setSelectedColor] = useState(phone?.specs.colors[0] || "")
-  const [selectedStorage, setSelectedStorage] = useState(phone?.specs.storage[0] || "")
-  const [quantity, setQuantity] = useState(1)
-  const [currentImageIndex, setCurrentImageIndex] = useState(0)
+  const [selectedColor, setSelectedColor] = useState(
+    phone?.specs.colors[0] || ""
+  );
+  const [selectedStorage, setSelectedStorage] = useState(
+    phone?.specs.storage[0] || ""
+  );
+  const [quantity, setQuantity] = useState(1);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
-  const { addItem } = useCart()
-  const { addPhone, isInComparison } = useComparison()
-  const { toast } = useToast()
+  const { addItem } = useCart();
+  const { addPhone, isInComparison } = useComparison();
+  const { toast } = useToast();
 
   if (!phone) {
     return (
       <div className="container py-12 text-center">
         <h1 className="text-2xl font-bold mb-4">Phone not found</h1>
-        <p className="mb-6">The phone you're looking for doesn't exist or has been removed.</p>
+        <p className="mb-6">
+          The phone you're looking for doesn't exist or has been removed.
+        </p>
         <Button asChild>
           <Link href="/shop">Browse Phones</Link>
         </Button>
       </div>
-    )
+    );
   }
 
   const handleAddToCart = () => {
-    addItem(phone.id, quantity, selectedColor, selectedStorage)
-  }
+    addItem(phone.id, quantity, selectedColor, selectedStorage);
+  };
 
   const handleShare = () => {
     if (navigator.share) {
@@ -59,30 +73,37 @@ export default function PhoneDetailPage() {
             title: "Error sharing",
             description: "There was an error sharing this phone.",
             variant: "destructive",
-          })
-        })
+          });
+        });
     } else {
       // Fallback for browsers that don't support the Web Share API
-      navigator.clipboard.writeText(window.location.href)
+      navigator.clipboard.writeText(window.location.href);
       toast({
         title: "Link copied",
         description: "The link has been copied to your clipboard.",
-      })
+      });
     }
-  }
+  };
 
   const nextImage = () => {
-    setCurrentImageIndex((prev) => (prev === phone.images.length - 1 ? 0 : prev + 1))
-  }
+    setCurrentImageIndex((prev) =>
+      prev === phone.images.length - 1 ? 0 : prev + 1
+    );
+  };
 
   const prevImage = () => {
-    setCurrentImageIndex((prev) => (prev === 0 ? phone.images.length - 1 : prev - 1))
-  }
+    setCurrentImageIndex((prev) =>
+      prev === 0 ? phone.images.length - 1 : prev - 1
+    );
+  };
 
   return (
     <div className="container py-8">
       <div className="mb-6">
-        <Link href="/shop" className="text-sm text-muted-foreground hover:text-foreground flex items-center">
+        <Link
+          href="/shop"
+          className="text-sm text-muted-foreground hover:text-foreground flex items-center"
+        >
           <ChevronLeft className="h-4 w-4 mr-1" />
           Back to Phones
         </Link>
@@ -169,20 +190,24 @@ export default function PhoneDetailPage() {
                     i < Math.floor(phone.rating)
                       ? "text-yellow-500 fill-yellow-500"
                       : i < phone.rating
-                        ? "text-yellow-500 fill-yellow-500"
-                        : "text-muted-foreground"
+                      ? "text-yellow-500 fill-yellow-500"
+                      : "text-muted-foreground"
                   }`}
                 />
               ))}
             </div>
-            <span className="text-muted-foreground">({phone.rating} rating)</span>
+            <span className="text-muted-foreground">
+              ({phone.rating} rating)
+            </span>
           </div>
 
           <div className="space-y-2">
             <div className="text-3xl font-bold">${phone.price}</div>
             {phone.originalPrice && (
               <div className="flex items-center space-x-2">
-                <span className="text-muted-foreground line-through">${phone.originalPrice}</span>
+                <span className="text-muted-foreground line-through">
+                  ${phone.originalPrice}
+                </span>
                 <Badge variant="outline" className="text-green-600">
                   Save ${(phone.originalPrice - phone.price).toFixed(2)}
                 </Badge>
@@ -200,7 +225,9 @@ export default function PhoneDetailPage() {
                   <button
                     key={color}
                     className={`px-3 py-1 border rounded-full ${
-                      selectedColor === color ? "bg-primary text-primary-foreground" : "bg-background hover:bg-muted"
+                      selectedColor === color
+                        ? "bg-primary text-primary-foreground"
+                        : "bg-background hover:bg-muted"
                     }`}
                     onClick={() => setSelectedColor(color)}
                   >
@@ -232,11 +259,19 @@ export default function PhoneDetailPage() {
             <div className="space-y-2">
               <label className="font-medium">Quantity</label>
               <div className="flex items-center space-x-2">
-                <Button variant="outline" size="icon" onClick={() => setQuantity(Math.max(1, quantity - 1))}>
+                <Button
+                  variant="outline"
+                  size="icon"
+                  onClick={() => setQuantity(Math.max(1, quantity - 1))}
+                >
                   <ChevronLeft className="h-4 w-4" />
                 </Button>
                 <span className="w-8 text-center">{quantity}</span>
-                <Button variant="outline" size="icon" onClick={() => setQuantity(quantity + 1)}>
+                <Button
+                  variant="outline"
+                  size="icon"
+                  onClick={() => setQuantity(quantity + 1)}
+                >
                   <ChevronRight className="h-4 w-4" />
                 </Button>
               </div>
@@ -298,7 +333,9 @@ export default function PhoneDetailPage() {
                       { label: "Operating System", value: phone.specs.os },
                     ].map((item, i) => (
                       <div key={i} className="flex justify-between">
-                        <span className="text-muted-foreground">{item.label}</span>
+                        <span className="text-muted-foreground">
+                          {item.label}
+                        </span>
                         <span>{item.value}</span>
                       </div>
                     ))}
@@ -311,7 +348,9 @@ export default function PhoneDetailPage() {
                       { label: "Resolution", value: phone.specs.resolution },
                     ].map((item, i) => (
                       <div key={i} className="flex justify-between">
-                        <span className="text-muted-foreground">{item.label}</span>
+                        <span className="text-muted-foreground">
+                          {item.label}
+                        </span>
                         <span>{item.value}</span>
                       </div>
                     ))}
@@ -324,11 +363,16 @@ export default function PhoneDetailPage() {
                     {[
                       { label: "Processor", value: phone.specs.processor },
                       { label: "RAM", value: phone.specs.ram.join(", ") },
-                      { label: "Storage", value: phone.specs.storage.join(", ") },
+                      {
+                        label: "Storage",
+                        value: phone.specs.storage.join(", "),
+                      },
                       { label: "Battery", value: phone.specs.battery },
                     ].map((item, i) => (
                       <div key={i} className="flex justify-between">
-                        <span className="text-muted-foreground">{item.label}</span>
+                        <span className="text-muted-foreground">
+                          {item.label}
+                        </span>
                         <span>{item.value}</span>
                       </div>
                     ))}
@@ -338,12 +382,23 @@ export default function PhoneDetailPage() {
                   <div className="space-y-2">
                     {[
                       { label: "Main Camera", value: phone.specs.camera.main },
-                      { label: "Ultra-Wide", value: phone.specs.camera.ultraWide },
-                      { label: "Telephoto", value: phone.specs.camera.telephoto },
-                      { label: "Front Camera", value: phone.specs.camera.front },
+                      {
+                        label: "Ultra-Wide",
+                        value: phone.specs.camera.ultraWide,
+                      },
+                      {
+                        label: "Telephoto",
+                        value: phone.specs.camera.telephoto,
+                      },
+                      {
+                        label: "Front Camera",
+                        value: phone.specs.camera.front,
+                      },
                     ].map((item, i) => (
                       <div key={i} className="flex justify-between">
-                        <span className="text-muted-foreground">{item.label}</span>
+                        <span className="text-muted-foreground">
+                          {item.label}
+                        </span>
                         <span>{item.value}</span>
                       </div>
                     ))}
@@ -369,22 +424,32 @@ export default function PhoneDetailPage() {
                     <div className="flex justify-between">
                       <div>
                         <div className="font-medium">John Doe</div>
-                        <div className="text-sm text-muted-foreground">Verified Purchase</div>
+                        <div className="text-sm text-muted-foreground">
+                          Verified Purchase
+                        </div>
                       </div>
-                      <div className="text-sm text-muted-foreground">2 weeks ago</div>
+                      <div className="text-sm text-muted-foreground">
+                        2 weeks ago
+                      </div>
                     </div>
                     <div className="flex">
                       {Array.from({ length: 5 }).map((_, i) => (
                         <Star
                           key={i}
-                          className={`h-4 w-4 ${i < 4 ? "text-yellow-500 fill-yellow-500" : "text-muted-foreground"}`}
+                          className={`h-4 w-4 ${
+                            i < 4
+                              ? "text-yellow-500 fill-yellow-500"
+                              : "text-muted-foreground"
+                          }`}
                         />
                       ))}
                     </div>
-                    <h4 className="font-medium">Great phone, amazing camera!</h4>
+                    <h4 className="font-medium">
+                      Great phone, amazing camera!
+                    </h4>
                     <p className="text-sm">
-                      I've been using this phone for two weeks now and I'm very impressed with the camera quality and
-                      overall performance.
+                      I've been using this phone for two weeks now and I'm very
+                      impressed with the camera quality and overall performance.
                     </p>
                   </div>
 
@@ -392,21 +457,30 @@ export default function PhoneDetailPage() {
                     <div className="flex justify-between">
                       <div>
                         <div className="font-medium">Jane Smith</div>
-                        <div className="text-sm text-muted-foreground">Verified Purchase</div>
+                        <div className="text-sm text-muted-foreground">
+                          Verified Purchase
+                        </div>
                       </div>
-                      <div className="text-sm text-muted-foreground">1 month ago</div>
+                      <div className="text-sm text-muted-foreground">
+                        1 month ago
+                      </div>
                     </div>
                     <div className="flex">
                       {Array.from({ length: 5 }).map((_, i) => (
                         <Star
                           key={i}
-                          className={`h-4 w-4 ${i < 5 ? "text-yellow-500 fill-yellow-500" : "text-muted-foreground"}`}
+                          className={`h-4 w-4 ${
+                            i < 5
+                              ? "text-yellow-500 fill-yellow-500"
+                              : "text-muted-foreground"
+                          }`}
                         />
                       ))}
                     </div>
                     <h4 className="font-medium">Best phone I've ever owned</h4>
                     <p className="text-sm">
-                      The battery life is incredible and the display is stunning. Highly recommend!
+                      The battery life is incredible and the display is
+                      stunning. Highly recommend!
                     </p>
                   </div>
                 </div>
@@ -416,6 +490,5 @@ export default function PhoneDetailPage() {
         </TabsContent>
       </Tabs>
     </div>
-  )
+  );
 }
-

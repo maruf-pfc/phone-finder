@@ -1,36 +1,43 @@
-"use client"
+"use client";
 
-import type React from "react"
+import type React from "react";
 
-import { useEffect, useState } from "react"
-import { useAuth } from "@/context/auth-context"
-import { useRouter } from "next/navigation"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { toast } from "@/components/ui/use-toast"
+import { useEffect, useState } from "react";
+import { useAuth } from "@/context/auth-context";
+import { useRouter } from "next/navigation";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { toast } from "@/components/ui/use-toast";
 
 export default function ProfilePage() {
-  const { user, updateUser } = useAuth()
-  const router = useRouter()
-  const [isLoading, setIsLoading] = useState(true)
-  const [name, setName] = useState("")
-  const [email, setEmail] = useState("")
+  const { user, updateUser } = useAuth();
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(true);
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
 
   useEffect(() => {
     if (!user) {
-      router.push("/signin")
+      router.push("/signin");
     } else {
-      setName(user.name)
-      setEmail(user.email)
-      setIsLoading(false)
+      setName(user.name);
+      setEmail(user.email);
+      setIsLoading(false);
     }
-  }, [user, router])
+  }, [user, router]);
 
   const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault()
+    e.preventDefault();
     // In a real app, you would call an API to update the user's profile
     try {
       const response = await fetch("/api/users", {
@@ -39,30 +46,30 @@ export default function ProfilePage() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ id: user.id, name, email }),
-      })
+      });
       if (response.ok) {
-        const updatedUser = await response.json()
+        const updatedUser = await response.json();
         // Update the user context
-        updateUser(updatedUser)
+        updateUser(updatedUser);
         toast({
           title: "Profile updated",
           description: "Your profile has been successfully updated.",
-        })
+        });
       } else {
-        throw new Error("Failed to update profile")
+        throw new Error("Failed to update profile");
       }
     } catch (error) {
-      console.error("Error updating profile:", error)
+      console.error("Error updating profile:", error);
       toast({
         title: "Error",
         description: "Failed to update profile. Please try again.",
         variant: "destructive",
-      })
+      });
     }
-  }
+  };
 
   if (isLoading) {
-    return <div>Loading...</div>
+    return <div>Loading...</div>;
   }
 
   return (
@@ -70,7 +77,9 @@ export default function ProfilePage() {
       <Card className="max-w-2xl mx-auto">
         <CardHeader>
           <CardTitle>Profile</CardTitle>
-          <CardDescription>Manage your account settings and preferences.</CardDescription>
+          <CardDescription>
+            Manage your account settings and preferences.
+          </CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleSubmit}>
@@ -84,11 +93,20 @@ export default function ProfilePage() {
               </div>
               <div className="space-y-2">
                 <Label htmlFor="name">Name</Label>
-                <Input id="name" value={name} onChange={(e) => setName(e.target.value)} />
+                <Input
+                  id="name"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                />
               </div>
               <div className="space-y-2">
                 <Label htmlFor="email">Email</Label>
-                <Input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                <Input
+                  id="email"
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
               </div>
             </div>
             <Button type="submit" className="mt-4">
@@ -97,9 +115,11 @@ export default function ProfilePage() {
           </form>
         </CardContent>
         <CardFooter>
-          <p className="text-sm text-muted-foreground">Last updated: {new Date().toLocaleDateString()}</p>
+          <p className="text-sm text-muted-foreground">
+            Last updated: {new Date().toLocaleDateString()}
+          </p>
         </CardFooter>
       </Card>
     </div>
-  )
+  );
 }

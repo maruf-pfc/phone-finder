@@ -1,10 +1,10 @@
-import type React from "react"
-import { AdminSidebar } from "@/components/admin-sidebar"
+import type React from "react";
+import { AdminSidebar } from "@/components/admin-sidebar";
 
 export default function AdminLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
     <div className="flex min-h-screen flex-col space-y-6">
@@ -17,9 +17,10 @@ export default function AdminLayout({
         <aside className="hidden w-[200px] flex-col md:flex">
           <AdminSidebar />
         </aside>
-        <main className="flex w-full flex-1 flex-col overflow-hidden">{children}</main>
+        <main className="flex w-full flex-1 flex-col overflow-hidden">
+          {children}
+        </main>
       </div>
     </div>
-  )
+  );
 }
-

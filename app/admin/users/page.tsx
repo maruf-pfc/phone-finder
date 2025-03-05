@@ -1,10 +1,16 @@
-"use client"
+"use client";
 
-import { useState, useEffect } from "react"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
+import { useState, useEffect } from "react";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Button } from "@/components/ui/button";s
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
   Dialog,
   DialogContent,
@@ -13,27 +19,27 @@ import {
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog"
-import { Pencil, Trash2 } from "lucide-react"
-import { useToast } from "@/components/ui/use-toast"
-import type { User } from "@/lib/db"
+} from "@/components/ui/dialog";
+import { Pencil, Trash2 } from "lucide-react";
+import { useToast } from "@/components/ui/use-toast";
+import type { User } from "@/lib/db";
 
 export default function UsersPage() {
-  const [users, setUsers] = useState<User[]>([])
-  const [editingUser, setEditingUser] = useState<User | null>(null)
-  const { toast } = useToast()
+  const [users, setUsers] = useState<User[]>([]);
+  const [editingUser, setEditingUser] = useState<User | null>(null);
+  const { toast } = useToast();
 
   useEffect(() => {
-    fetchUsers()
-  }, [])
+    fetchUsers();
+  }, []);
 
   const fetchUsers = async () => {
-    const response = await fetch("/api/users")
+    const response = await fetch("/api/users");
     if (response.ok) {
-      const data = await response.json()
-      setUsers(data)
+      const data = await response.json();
+      setUsers(data);
     }
-  }
+  };
 
   const handleUpdateUser = async (updatedUser: User) => {
     const response = await fetch("/api/users", {
@@ -42,49 +48,51 @@ export default function UsersPage() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify(updatedUser),
-    })
+    });
 
     if (response.ok) {
-      setEditingUser(null)
-      fetchUsers()
+      setEditingUser(null);
+      fetchUsers();
       toast({
         title: "User updated",
         description: "The user information has been successfully updated.",
-      })
+      });
     } else {
       toast({
         title: "Error",
         description: "Failed to update user. Please try again.",
         variant: "destructive",
-      })
+      });
     }
-  }
+  };
 
   const handleDeleteUser = async (userId: number) => {
     const response = await fetch(`/api/users?id=${userId}`, {
       method: "DELETE",
-    })
+    });
 
     if (response.ok) {
-      fetchUsers()
+      fetchUsers();
       toast({
         title: "User deleted",
         description: "The user has been successfully deleted.",
-      })
+      });
     } else {
       toast({
         title: "Error",
         description: "Failed to delete user. Please try again.",
         variant: "destructive",
-      })
+      });
     }
-  }
+  };
 
   return (
     <Card>
       <CardHeader>
         <CardTitle>User Management</CardTitle>
-        <CardDescription>Manage user accounts, permissions, and activities</CardDescription>
+        <CardDescription>
+          Manage user accounts, permissions, and activities
+        </CardDescription>
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
@@ -105,7 +113,9 @@ export default function UsersPage() {
                   <DialogContent>
                     <DialogHeader>
                       <DialogTitle>Edit User</DialogTitle>
-                      <DialogDescription>Make changes to user information.</DialogDescription>
+                      <DialogDescription>
+                        Make changes to user information.
+                      </DialogDescription>
                     </DialogHeader>
                     <div className="grid gap-4 py-4">
                       <div className="grid gap-2">
@@ -113,7 +123,9 @@ export default function UsersPage() {
                         <Input
                           id="name"
                           defaultValue={user.name}
-                          onChange={(e) => setEditingUser({ ...user, name: e.target.value })}
+                          onChange={(e) =>
+                            setEditingUser({ ...user, name: e.target.value })
+                          }
                         />
                       </div>
                       <div className="grid gap-2">
@@ -121,16 +133,28 @@ export default function UsersPage() {
                         <Input
                           id="email"
                           defaultValue={user.email}
-                          onChange={(e) => setEditingUser({ ...user, email: e.target.value })}
+                          onChange={(e) =>
+                            setEditingUser({ ...user, email: e.target.value })
+                          }
                         />
                       </div>
                     </div>
                     <DialogFooter>
-                      <Button onClick={() => editingUser && handleUpdateUser(editingUser)}>Save changes</Button>
+                      <Button
+                        onClick={() =>
+                          editingUser && handleUpdateUser(editingUser)
+                        }
+                      >
+                        Save changes
+                      </Button>
                     </DialogFooter>
                   </DialogContent>
                 </Dialog>
-                <Button variant="destructive" size="sm" onClick={() => handleDeleteUser(user.id)}>
+                <Button
+                  variant="destructive"
+                  size="sm"
+                  onClick={() => handleDeleteUser(user.id)}
+                >
                   <Trash2 className="h-4 w-4 mr-2" />
                   Delete
                 </Button>
@@ -140,6 +164,5 @@ export default function UsersPage() {
         </div>
       </CardContent>
     </Card>
-  )
+  );
 }
-

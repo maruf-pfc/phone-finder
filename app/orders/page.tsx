@@ -1,11 +1,17 @@
-"use client"
+"use client";
 
-import { useEffect, useState } from "react"
-import { useAuth } from "@/context/auth-context"
-import { useRouter } from "next/navigation"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import { ShoppingBag, Package, Truck, CheckCircle } from "lucide-react"
+import { useEffect, useState } from "react";
+import { useAuth } from "@/context/auth-context";
+import { useRouter } from "next/navigation";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { ShoppingBag, Package, Truck, CheckCircle } from "lucide-react";
 
 // Mock order data (in a real app, this would come from an API)
 const mockOrders = [
@@ -21,7 +27,9 @@ const mockOrders = [
     date: "2024-03-05",
     total: 1199,
     status: "Shipped",
-    items: [{ id: 2, name: "Samsung Galaxy S23 Ultra", quantity: 1, price: 1199 }],
+    items: [
+      { id: 2, name: "Samsung Galaxy S23 Ultra", quantity: 1, price: 1199 },
+    ],
   },
   {
     id: "ORD-003",
@@ -33,38 +41,38 @@ const mockOrders = [
       { id: 4, name: "OnePlus 12", quantity: 1, price: 899 },
     ],
   },
-]
+];
 
 export default function OrdersPage() {
-  const { user } = useAuth()
-  const router = useRouter()
-  const [isLoading, setIsLoading] = useState(true)
-  const [orders, setOrders] = useState(mockOrders)
+  const { user } = useAuth();
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(true);
+  const [orders, setOrders] = useState(mockOrders);
 
   useEffect(() => {
     if (!user) {
-      router.push("/signin")
+      router.push("/signin");
     } else {
-      setIsLoading(false)
+      setIsLoading(false);
     }
-  }, [user, router])
+  }, [user, router]);
 
   if (isLoading) {
-    return <div>Loading...</div>
+    return <div>Loading...</div>;
   }
 
   const getStatusIcon = (status: string) => {
     switch (status) {
       case "Processing":
-        return <ShoppingBag className="h-4 w-4" />
+        return <ShoppingBag className="h-4 w-4" />;
       case "Shipped":
-        return <Truck className="h-4 w-4" />
+        return <Truck className="h-4 w-4" />;
       case "Delivered":
-        return <CheckCircle className="h-4 w-4" />
+        return <CheckCircle className="h-4 w-4" />;
       default:
-        return <Package className="h-4 w-4" />
+        return <Package className="h-4 w-4" />;
     }
-  }
+  };
 
   return (
     <div className="container mx-auto px-4 py-8">
@@ -80,15 +88,22 @@ export default function OrdersPage() {
                   {order.status}
                 </Badge>
               </div>
-              <CardDescription>Placed on {new Date(order.date).toLocaleDateString()}</CardDescription>
+              <CardDescription>
+                Placed on {new Date(order.date).toLocaleDateString()}
+              </CardDescription>
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
                 {order.items.map((item) => (
-                  <div key={item.id} className="flex justify-between items-center">
+                  <div
+                    key={item.id}
+                    className="flex justify-between items-center"
+                  >
                     <div>
                       <p className="font-medium">{item.name}</p>
-                      <p className="text-sm text-muted-foreground">Quantity: {item.quantity}</p>
+                      <p className="text-sm text-muted-foreground">
+                        Quantity: {item.quantity}
+                      </p>
                     </div>
                     <p>${item.price.toFixed(2)}</p>
                   </div>
@@ -103,5 +118,5 @@ export default function OrdersPage() {
         ))}
       </div>
     </div>
-  )
+  );
 }
