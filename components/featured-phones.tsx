@@ -22,7 +22,7 @@ export default function FeaturedPhones() {
         <Card key={phone.id} className="overflow-hidden">
           <div className="relative pt-4 px-4">
             {phone.isNew && <Badge className="absolute top-6 right-6 z-10">New</Badge>}
-            <Link href={`/phones/${phone.id}`}>
+            <Link href={`/shop/${phone.id}`}>
               <div className="relative h-48 w-full mb-2">
                 <Image src={phone.image || "/placeholder.svg"} alt={phone.name} fill className="object-contain" />
               </div>
@@ -30,7 +30,7 @@ export default function FeaturedPhones() {
           </div>
           <CardContent className="p-4">
             <div className="text-sm text-muted-foreground mb-1">{phone.brand}</div>
-            <Link href={`/phones/${phone.id}`} className="hover:underline">
+            <Link href={`/shop/${phone.id}`} className="hover:underline">
               <h3 className="font-semibold text-lg mb-2 line-clamp-1">{phone.name}</h3>
             </Link>
             <div className="flex items-center justify-between">

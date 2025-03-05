@@ -106,7 +106,7 @@ export default function Home() {
             <div className="flex justify-between items-center mb-8">
               <h2 className="text-3xl font-bold">Featured Phones</h2>
               <Button asChild variant="outline">
-                <Link href="/phones">View All</Link>
+                <Link href="/shop">View All</Link>
               </Button>
             </div>
             <FeaturedPhones />
