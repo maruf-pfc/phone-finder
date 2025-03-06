@@ -27,10 +27,10 @@ export default function Home() {
                 </p>
                 <div className="flex flex-col sm:flex-row gap-4">
                   <Button asChild size="lg">
-                    <Link href="/phones">Browse Phones</Link>
+                    <Link href="/shop">Browse Phones</Link>
                   </Button>
                   <Button asChild variant="outline" size="lg">
-                    <Link href="/community">Join Community</Link>
+                    <Link href="/community/discussions">Join Community</Link>
                   </Button>
                 </div>
               </div>

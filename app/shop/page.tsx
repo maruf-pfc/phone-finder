@@ -362,7 +362,7 @@ export default function PhonesPage() {
                   {phone.isNew && (
                     <Badge className="absolute top-6 right-6 z-10">New</Badge>
                   )}
-                  <Link href={`/phones/${phone.id}`}>
+                  <Link href={`/shop/${phone.id}`}>
                     <div className="relative h-48 w-full mb-2">
                       <Image
                         src={phone.image || "/placeholder.svg"}
@@ -378,7 +378,7 @@ export default function PhonesPage() {
                     {phone.brand}
                   </div>
                   <Link
-                    href={`/phones/${phone.id}`}
+                    href={`/shop/${phone.id}`}
                     className="hover:underline"
                   >
                     <h3 className="font-semibold text-lg mb-2 line-clamp-1">
