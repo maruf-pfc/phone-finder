@@ -60,7 +60,7 @@ export default function SearchBar() {
               key={phone.id}
               className="w-full px-4 py-2 text-left hover:bg-accent transition-colors"
               onClick={() => {
-                router.push(`/phones/${phone.id}`)
+                router.push(`/shop/${phone.id}`)
                 setSuggestions([])
                 setSearchTerm("")
               }}
